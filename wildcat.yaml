@@ -1,0 +1,10 @@
+streams:
+  camera:
+  	path: "/camera/**/*.png"
+
+  default:
+  	path: "**"
+
+
+storage:
+  localPath: "./data/"

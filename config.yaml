@@ -1,0 +1,18 @@
+hss:
+  port: 8765
+
+mysql:
+  path: /
+  connection: 
+    host:     localhost
+    port:     8889
+    user:     root
+    password: root
+    database: orbit2 
+  columns:  [ "time", "number" ]
+  table: state
+  debug: false
+
+osc:
+  incoming: 9001
+  outoing: 9000

@@ -1,0 +1,357 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		74EAF3A418AB3AEE003858D3 /* Horten.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74EAF39E18AB3AEE003858D3 /* Horten.cpp */; };
+		74EAF3A518AB3AEE003858D3 /* Horten.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF39F18AB3AEE003858D3 /* Horten.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		74EAF3A618AB3AEE003858D3 /* Listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74EAF3A018AB3AEE003858D3 /* Listener.cpp */; };
+		74EAF3A718AB3AEE003858D3 /* Listener.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3A118AB3AEE003858D3 /* Listener.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		74EAF3A818AB3AEE003858D3 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74EAF3A218AB3AEE003858D3 /* Socket.cpp */; };
+		74EAF3A918AB3AEE003858D3 /* Socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3A318AB3AEE003858D3 /* Socket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		74EAF3EC18AB3B44003858D3 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3AB18AB3B44003858D3 /* autolink.h */; };
+		74EAF3FC18AB3B44003858D3 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3DA18AB3B44003858D3 /* config.h */; };
+		74EAF3FD18AB3B44003858D3 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3DB18AB3B44003858D3 /* features.h */; };
+		74EAF3FE18AB3B44003858D3 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3DC18AB3B44003858D3 /* forwards.h */; };
+		74EAF3FF18AB3B44003858D3 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3DD18AB3B44003858D3 /* json.h */; };
+		74EAF40018AB3B44003858D3 /* json_batchallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3DE18AB3B44003858D3 /* json_batchallocator.h */; };
+		74EAF40118AB3B44003858D3 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74EAF3E118AB3B44003858D3 /* json_reader.cpp */; };
+		74EAF40218AB3B44003858D3 /* json_tool.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3E218AB3B44003858D3 /* json_tool.h */; };
+		74EAF40318AB3B44003858D3 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74EAF3E318AB3B44003858D3 /* json_value.cpp */; };
+		74EAF40418AB3B44003858D3 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74EAF3E518AB3B44003858D3 /* json_writer.cpp */; };
+		74EAF40518AB3B44003858D3 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3E918AB3B44003858D3 /* reader.h */; };
+		74EAF40618AB3B44003858D3 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3EA18AB3B44003858D3 /* value.h */; };
+		74EAF40718AB3B44003858D3 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 74EAF3EB18AB3B44003858D3 /* writer.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		74EAF40918AB3B44003858D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74EAF3E618AB3B44003858D3 /* JsonCpp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 241917E717CED1E1006B71E8;
+			remoteInfo = JsonCpp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		74EAF39718AB3A75003858D3 /* libhorten.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libhorten.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		74EAF39E18AB3AEE003858D3 /* Horten.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Horten.cpp; sourceTree = "<group>"; };
+		74EAF39F18AB3AEE003858D3 /* Horten.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Horten.h; sourceTree = "<group>"; };
+		74EAF3A018AB3AEE003858D3 /* Listener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Listener.cpp; sourceTree = "<group>"; };
+		74EAF3A118AB3AEE003858D3 /* Listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Listener.h; sourceTree = "<group>"; };
+		74EAF3A218AB3AEE003858D3 /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Socket.cpp; sourceTree = "<group>"; };
+		74EAF3A318AB3AEE003858D3 /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Socket.h; sourceTree = "<group>"; };
+		74EAF3AB18AB3B44003858D3 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
+		74EAF3DA18AB3B44003858D3 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		74EAF3DB18AB3B44003858D3 /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
+		74EAF3DC18AB3B44003858D3 /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
+		74EAF3DD18AB3B44003858D3 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		74EAF3DE18AB3B44003858D3 /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
+		74EAF3DF18AB3B44003858D3 /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
+		74EAF3E018AB3B44003858D3 /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
+		74EAF3E118AB3B44003858D3 /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
+		74EAF3E218AB3B44003858D3 /* json_tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_tool.h; sourceTree = "<group>"; };
+		74EAF3E318AB3B44003858D3 /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
+		74EAF3E418AB3B44003858D3 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
+		74EAF3E518AB3B44003858D3 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
+		74EAF3E618AB3B44003858D3 /* JsonCpp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = JsonCpp.xcodeproj; sourceTree = "<group>"; };
+		74EAF3E918AB3B44003858D3 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		74EAF3EA18AB3B44003858D3 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
+		74EAF3EB18AB3B44003858D3 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		74EAF39418AB3A75003858D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		74EAF38E18AB3A75003858D3 = {
+			isa = PBXGroup;
+			children = (
+				74EAF3AA18AB3B44003858D3 /* json */,
+				74EAF39E18AB3AEE003858D3 /* Horten.cpp */,
+				74EAF39F18AB3AEE003858D3 /* Horten.h */,
+				74EAF3A018AB3AEE003858D3 /* Listener.cpp */,
+				74EAF3A118AB3AEE003858D3 /* Listener.h */,
+				74EAF3A218AB3AEE003858D3 /* Socket.cpp */,
+				74EAF3A318AB3AEE003858D3 /* Socket.h */,
+				74EAF39818AB3A75003858D3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		74EAF39818AB3A75003858D3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74EAF39718AB3A75003858D3 /* libhorten.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74EAF3AA18AB3B44003858D3 /* json */ = {
+			isa = PBXGroup;
+			children = (
+				74EAF3AB18AB3B44003858D3 /* autolink.h */,
+				74EAF3DA18AB3B44003858D3 /* config.h */,
+				74EAF3DB18AB3B44003858D3 /* features.h */,
+				74EAF3DC18AB3B44003858D3 /* forwards.h */,
+				74EAF3DD18AB3B44003858D3 /* json.h */,
+				74EAF3DE18AB3B44003858D3 /* json_batchallocator.h */,
+				74EAF3DF18AB3B44003858D3 /* json_internalarray.inl */,
+				74EAF3E018AB3B44003858D3 /* json_internalmap.inl */,
+				74EAF3E118AB3B44003858D3 /* json_reader.cpp */,
+				74EAF3E218AB3B44003858D3 /* json_tool.h */,
+				74EAF3E318AB3B44003858D3 /* json_value.cpp */,
+				74EAF3E418AB3B44003858D3 /* json_valueiterator.inl */,
+				74EAF3E518AB3B44003858D3 /* json_writer.cpp */,
+				74EAF3E618AB3B44003858D3 /* JsonCpp.xcodeproj */,
+				74EAF3E918AB3B44003858D3 /* reader.h */,
+				74EAF3EA18AB3B44003858D3 /* value.h */,
+				74EAF3EB18AB3B44003858D3 /* writer.h */,
+			);
+			path = json;
+			sourceTree = "<group>";
+		};
+		74EAF3E718AB3B44003858D3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74EAF40A18AB3B44003858D3 /* libJsonCpp.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		74EAF39518AB3A75003858D3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74EAF3A518AB3AEE003858D3 /* Horten.h in Headers */,
+				74EAF3A718AB3AEE003858D3 /* Listener.h in Headers */,
+				74EAF3A918AB3AEE003858D3 /* Socket.h in Headers */,
+				74EAF3FD18AB3B44003858D3 /* features.h in Headers */,
+				74EAF40018AB3B44003858D3 /* json_batchallocator.h in Headers */,
+				74EAF40518AB3B44003858D3 /* reader.h in Headers */,
+				74EAF40618AB3B44003858D3 /* value.h in Headers */,
+				74EAF3EC18AB3B44003858D3 /* autolink.h in Headers */,
+				74EAF3FE18AB3B44003858D3 /* forwards.h in Headers */,
+				74EAF3FF18AB3B44003858D3 /* json.h in Headers */,
+				74EAF40718AB3B44003858D3 /* writer.h in Headers */,
+				74EAF40218AB3B44003858D3 /* json_tool.h in Headers */,
+				74EAF3FC18AB3B44003858D3 /* config.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		74EAF39618AB3A75003858D3 /* horten */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74EAF39B18AB3A75003858D3 /* Build configuration list for PBXNativeTarget "horten" */;
+			buildPhases = (
+				74EAF39318AB3A75003858D3 /* Sources */,
+				74EAF39418AB3A75003858D3 /* Frameworks */,
+				74EAF39518AB3A75003858D3 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = horten;
+			productName = horten;
+			productReference = 74EAF39718AB3A75003858D3 /* libhorten.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		74EAF38F18AB3A75003858D3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Samm Cooper";
+			};
+			buildConfigurationList = 74EAF39218AB3A75003858D3 /* Build configuration list for PBXProject "horten" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 74EAF38E18AB3A75003858D3;
+			productRefGroup = 74EAF39818AB3A75003858D3 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 74EAF3E718AB3B44003858D3 /* Products */;
+					ProjectRef = 74EAF3E618AB3B44003858D3 /* JsonCpp.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				74EAF39618AB3A75003858D3 /* horten */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		74EAF40A18AB3B44003858D3 /* libJsonCpp.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libJsonCpp.dylib;
+			remoteRef = 74EAF40918AB3B44003858D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		74EAF39318AB3A75003858D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74EAF40118AB3B44003858D3 /* json_reader.cpp in Sources */,
+				74EAF40318AB3B44003858D3 /* json_value.cpp in Sources */,
+				74EAF3A418AB3AEE003858D3 /* Horten.cpp in Sources */,
+				74EAF3A818AB3AEE003858D3 /* Socket.cpp in Sources */,
+				74EAF3A618AB3AEE003858D3 /* Listener.cpp in Sources */,
+				74EAF40418AB3B44003858D3 /* json_writer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		74EAF39918AB3A75003858D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		74EAF39A18AB3A75003858D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		74EAF39C18AB3A75003858D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Volumes/hdd/koop/Code/horten-cpp/horten/json/build/JsonCpp.build/Release/JsonCpp.build/Objects-normal/i386",
+					"/Volumes/hdd/koop/Code/horten-cpp/horten/json/build/JsonCpp.build/Release/JsonCpp.build/Objects-normal/x86_64",
+					"/Volumes/hdd/koop/Code/horten-cpp/horten/json/build/Release",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = YES;
+			};
+			name = Debug;
+		};
+		74EAF39D18AB3A75003858D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Volumes/hdd/koop/Code/horten-cpp/horten/json/build/JsonCpp.build/Release/JsonCpp.build/Objects-normal/i386",
+					"/Volumes/hdd/koop/Code/horten-cpp/horten/json/build/JsonCpp.build/Release/JsonCpp.build/Objects-normal/x86_64",
+					"/Volumes/hdd/koop/Code/horten-cpp/horten/json/build/Release",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		74EAF39218AB3A75003858D3 /* Build configuration list for PBXProject "horten" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74EAF39918AB3A75003858D3 /* Debug */,
+				74EAF39A18AB3A75003858D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74EAF39B18AB3A75003858D3 /* Build configuration list for PBXNativeTarget "horten" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74EAF39C18AB3A75003858D3 /* Debug */,
+				74EAF39D18AB3A75003858D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 74EAF38F18AB3A75003858D3 /* Project object */;
+}
