@@ -1,3 +1,14 @@
+horten:
+  debug: true
+
+camera:
+  toGif:
+    path: ""
+
+  record: 
+    path: "/camera/record/$t.png"
+
+
 hss:
   port: 8765
 
@@ -15,4 +26,4 @@ mysql:
 
 osc:
   incoming: 9001
-  outoing: 9000
+  outgoing: 9000

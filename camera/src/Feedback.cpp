@@ -19,6 +19,7 @@ void Feedback::setup( int width, int height ) {
 	feedbackShader.addVar( ShaderVar( "multColour", Vec4f( 0.8, 0.8, 0.8, 0.8 ) ) );
 	feedbackShader.addVar( ShaderVar( "blurAmount", "blur/amount", 0 ) );
 
+	_size = Vec2i( width, height );
 	
 	Fbo::Format format;
 	format.setColorInternalFormat( GL_RGBA32F_ARB );
@@ -31,10 +32,14 @@ void Feedback::setup( int width, int height ) {
 	clear();
 }
 
+Vec2i Feedback::getSize() {
+	return _size;
+}
+
 void Feedback::clear() {
 	for ( int i = 0; i < 2; i ++ ) {
 		buffer[i].bindFramebuffer();
-		gl::clear( ColorAf( 1,0,1,0.2) );
+		gl::clear( ColorAf( 0,0,0,0) );
 		buffer[i].unbindFramebuffer();
 	}
 }
@@ -43,12 +48,21 @@ void Feedback::add(const cinder::gl::Texture &tex) {
 	int write = curBuffer;
 	buffer[write].bindFramebuffer();
 	
+	Vec4f mix = listener.getVec4f( "/mix/", Vec4f( 0.5,0.5,0.5,0.5 ) );
+	
+	float mixPow = 2.5;
+	
+	mix.x = pow( mix.x,  mixPow );
+	mix.y = pow( mix.y,  mixPow );
+	mix.z = pow( mix.z,  mixPow );
+	mix.w = pow( mix.w,  mixPow );
+	
 	
 	glEnable(GL_BLEND);
 	glEnable(GL_ALPHA);
 	glBlendFunc(GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR);
 	glBlendEquation(GL_FUNC_ADD);
-	glBlendColor(0.8, 0.1, 0.9, 0.20);
+	glBlendColor( mix.x, mix.y, mix.z, mix.w );
 	
 	
 	//glDisable(GL_BLEND);
@@ -70,14 +84,15 @@ void Feedback::feedback() {
 	//color( 0,0,0,0 );
 	//clear();
 	
+	//feedbackShader.bind();
 	glDisable(GL_BLEND);
 	
 	color( 1,1,1,1);
 	
 	
-	feedbackShader.bind();
+	
 	draw( tex );
-	feedbackShader.unbind();
+	//feedbackShader.unbind();
 	
 	
 	//drawSolidCircle( Vec2f(0,0), 100 );
@@ -90,16 +105,27 @@ void Feedback::feedback() {
 }
 
 void Feedback::bind() {
+	
+	
+	
 	int write = curBuffer ^ 0;
 	buffer[write].bindFramebuffer();
+	
+	gl::pushMatrices();
+	//gl::setMatricesWindowPersp( buffer[write].getSize(), 90, -1, 3, true );
+	gl::setMatricesWindow( buffer[write].getSize(), false );
+	
+	
 }
 
 void Feedback::unbind() {
+	gl::popMatrices();
+	
 	int write = curBuffer ^ 0;
 	buffer[write].unbindFramebuffer();
 }
 
 
 Texture Feedback::getTexture() {
-	return buffer[curBuffer ^ 1].getTexture();
+	return buffer[curBuffer ^ 0].getTexture();
 }

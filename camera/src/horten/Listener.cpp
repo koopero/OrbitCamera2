@@ -37,30 +37,39 @@ namespace Horten {
 		return horten->getDouble( appendPath( string ( path ) ), defaultValue );
 	}
 	
-	ci::Vec3f Listener::getVec3f ( const char * path, ci::Vec3f defaultValue ) {
+	std::string Listener::getString ( const std::string &path, const std::string &defaultValue ) {
+		Json::Value value = get( path );
+		if ( !value.isString() ) {
+			return defaultValue;
+		}
+		
+		return value.asString();
+	}
+	
+
+
+	Vec3f Listener::getVec3f ( const char * path, Vec3f defaultValue ) {
 		return getVec3f( string( path ), defaultValue );
 	}
 	
-	ci::Vec3f Listener::getVec3f ( const string &path, ci::Vec3f defaultValue ) {
+	Vec3f Listener::getVec3f ( const string &path, Vec3f defaultValue ) {
 		Value jsonVal = horten->get( appendPath( path ) );
 		
-		if ( !jsonVal.isObject() )
-			return defaultValue;
-		
-		ci::Vec3f ret = defaultValue;
-		
-		if ( jsonVal["x"].isNumeric() )
-			ret.x = jsonVal["x"].asFloat();
-		
-		if ( jsonVal["y"].isNumeric() )
-			ret.y = jsonVal["y"].asFloat();
-		
-		if ( jsonVal["z"].isNumeric() )
-			ret.z = jsonVal["z"].asFloat();
-		
-		return ret;
+		return jsonToVec3f( jsonVal, defaultValue );
 	}
+
+
+	Vec4f Listener::getVec4f ( const char * path, Vec4f defaultValue ) {
+		return getVec4f( string( path ), defaultValue );
+	}
+	
+	Vec4f Listener::getVec4f ( const string &path, Vec4f defaultValue ) {
+		Value jsonVal = horten->get( appendPath( path ) );
 		
+		return jsonToVec4f( jsonVal, defaultValue );
+	}
+
+	
 	bool Listener::getBool ( const char * path ) {
 		return get( path ).asBool();
 	}

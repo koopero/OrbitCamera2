@@ -47,6 +47,9 @@
 		74A0106A18EEDB48002D3D13 /* HortenShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74A0106818EEDB48002D3D13 /* HortenShader.cpp */; };
 		74AA504E18CEDB7400002EAD /* kinectFilter.frag.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 74AA504C18CEDB7400002EAD /* kinectFilter.frag.glsl */; };
 		74AA504F18CEDB7400002EAD /* passthru.vert.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 74AA504D18CEDB7400002EAD /* passthru.vert.glsl */; };
+		74AF4F0D191C7F4F009005DA /* FrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AF4F0B191C7F4F009005DA /* FrameCache.cpp */; };
+		74AF4F11191CDC69009005DA /* JsonToCinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AF4F0F191CDC69009005DA /* JsonToCinder.cpp */; };
+		74AF4F14191F4017009005DA /* TimeRanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AF4F12191F4017009005DA /* TimeRanger.cpp */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AC61F350C88548E191797E22 /* cameraApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF766C176E8404BAA562EB5 /* cameraApp.cpp */; };
 		F117D0C0D9FB4EF7A1770CF3 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B0921FDB7645F4AB2E917A /* IOKit.framework */; };
@@ -131,6 +134,12 @@
 		74A0106918EEDB48002D3D13 /* HortenShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HortenShader.h; path = ../src/HortenShader.h; sourceTree = "<group>"; };
 		74AA504C18CEDB7400002EAD /* kinectFilter.frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kinectFilter.frag.glsl; sourceTree = "<group>"; };
 		74AA504D18CEDB7400002EAD /* passthru.vert.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = passthru.vert.glsl; sourceTree = "<group>"; };
+		74AF4F0B191C7F4F009005DA /* FrameCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FrameCache.cpp; path = ../src/FrameCache.cpp; sourceTree = "<group>"; };
+		74AF4F0C191C7F4F009005DA /* FrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameCache.h; path = ../src/FrameCache.h; sourceTree = "<group>"; };
+		74AF4F0F191CDC69009005DA /* JsonToCinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JsonToCinder.cpp; path = ../src/JsonToCinder.cpp; sourceTree = "<group>"; };
+		74AF4F10191CDC69009005DA /* JsonToCinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsonToCinder.h; path = ../src/JsonToCinder.h; sourceTree = "<group>"; };
+		74AF4F12191F4017009005DA /* TimeRanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeRanger.cpp; path = ../src/TimeRanger.cpp; sourceTree = "<group>"; };
+		74AF4F13191F4017009005DA /* TimeRanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeRanger.h; path = ../src/TimeRanger.h; sourceTree = "<group>"; };
 		791B1828308847249D2438D3 /* usb_libusb10.c */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = usb_libusb10.c; path = "../blocks/Cinder-Freenect/src/freenect/usb_libusb10.c"; sourceTree = "<group>"; };
 		881E45D2B59C456F9F0B924D /* registration.c */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = registration.c; path = "../blocks/Cinder-Freenect/src/freenect/registration.c"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +194,12 @@
 				748859D819161B0C00B17DCD /* Screen.h */,
 				748859DE191622E100B17DCD /* OrbitCamera.cpp */,
 				748859DF191622E100B17DCD /* OrbitCamera.h */,
+				74AF4F0B191C7F4F009005DA /* FrameCache.cpp */,
+				74AF4F0C191C7F4F009005DA /* FrameCache.h */,
+				74AF4F0F191CDC69009005DA /* JsonToCinder.cpp */,
+				74AF4F10191CDC69009005DA /* JsonToCinder.h */,
+				74AF4F12191F4017009005DA /* TimeRanger.cpp */,
+				74AF4F13191F4017009005DA /* TimeRanger.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -477,6 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74A0106A18EEDB48002D3D13 /* HortenShader.cpp in Sources */,
+				74AF4F11191CDC69009005DA /* JsonToCinder.cpp in Sources */,
 				74A0105318E40410002D3D13 /* json_reader.cpp in Sources */,
 				74A0106018E67991002D3D13 /* HeightField.cpp in Sources */,
 				74A0106318E68718002D3D13 /* Feedback.cpp in Sources */,
@@ -487,10 +503,12 @@
 				746D609224A94A269F13C9B1 /* CinderFreenect.cpp in Sources */,
 				4FDB8117022A404C978A3292 /* cameras.c in Sources */,
 				616F6135BDB84FF48BCDD977 /* core.c in Sources */,
+				74AF4F0D191C7F4F009005DA /* FrameCache.cpp in Sources */,
 				74A0105818E40410002D3D13 /* Socket.cpp in Sources */,
 				748859E0191622E100B17DCD /* OrbitCamera.cpp in Sources */,
 				748859DD19161CC000B17DCD /* Layer.cpp in Sources */,
 				236D09DE606C44A38E8D6ACF /* registration.c in Sources */,
+				74AF4F14191F4017009005DA /* TimeRanger.cpp in Sources */,
 				6C068199176E41A896632DB8 /* tilt.c in Sources */,
 				74A0105618E40410002D3D13 /* json_writer.cpp in Sources */,
 				1EDC60A6A91D462AA554D6CE /* usb_libusb10.c in Sources */,

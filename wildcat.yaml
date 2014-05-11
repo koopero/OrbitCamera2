@@ -1,9 +1,9 @@
 streams:
   camera:
-  	path: "/camera/**/*.png"
+    path: "/camera/**/*.png"
 
   default:
-  	path: "**"
+    path: "**"
 
 
 storage:

@@ -19,6 +19,7 @@
 #include "cinder/gl/Vbo.h"
 
 #include "horten/Listener.h"
+#include "JsonToCinder.h"
 
 using namespace cinder;
 using namespace cinder::gl;
@@ -29,6 +30,7 @@ class ShaderVar {
 public:
 	ShaderVar( const ShaderVar &copy );
 	ShaderVar( const char * name, float defaultValue );
+	ShaderVar( const char * name, const char * path, float defaultValue );
 	ShaderVar( string name, string path, float defaultValue );
 	
 	ShaderVar( string name, string path, Vec4f defaultValue );

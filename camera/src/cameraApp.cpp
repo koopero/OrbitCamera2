@@ -46,12 +46,13 @@ class cameraApp : public AppBasic {
 	Listener listener;
 	
 	OrbitCamera		camera;
+	FrameCache		frames;
 
 	gl::Fbo			mBuffer;
 	gl::GlslProg	mShader;
 	
 	int numScreens = 1;
-	int numLayers = 1;
+	int numLayers = 3;
 
 	vector<Screen>	screens;
 	
@@ -61,7 +62,7 @@ private:
 
 void cameraApp::prepareSettings( Settings* settings )
 {
-	settings->setWindowSize( 1280, 960 );
+	settings->setWindowSize( 1024, 1024 );
 }
 
 void cameraApp::initHorten () {
@@ -89,7 +90,9 @@ void cameraApp::setup()
 	
 	for ( int i = 0; i < numScreens; i ++ ) {
 		std::ostringstream path;
-		path << "/screen/" << i << "/";
+		//path << "/screen/" << i << "/";
+		path << "control/screen/";
+		
 		screens[i].setPath( path.str() );
 		screens[i].setup( numLayers );
 	}
@@ -112,13 +115,11 @@ void cameraApp::keyDown( KeyEvent event) {
 void cameraApp::update()
 {
 	camera.update();
-	//camera.save();
+	camera.save();
 	
-	Texture cam = camera.getTexture();
-	
-
-	for ( vector<Screen>::iterator screen = screens.begin(); screen != screens.end(); ++screen ) {
-		screen->setInput( cam );
+	for ( vector<Screen>::iterator screen = screens.begin(); screen != screens.end(); ++screen )
+	{
+		screen->takeInput( &camera, &frames );
 		screen->update();
 	}
 
@@ -129,7 +130,8 @@ void cameraApp::update()
 
 void cameraApp::draw()
 {
-	for ( vector<Screen>::iterator screen = screens.begin(); screen != screens.end(); ++screen ) {
+	for ( vector<Screen>::iterator screen = screens.begin(); screen != screens.end(); ++screen )
+	{
 		screen->render();
 		//screen->draw();
 	}

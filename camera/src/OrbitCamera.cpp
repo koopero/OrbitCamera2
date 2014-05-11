@@ -13,6 +13,7 @@ using namespace ci;
 
 void OrbitCamera::setPath( string path ) {
 	listener.path = path;
+	time.setPath( path );
 }
 
 void OrbitCamera::setup() {
@@ -39,6 +40,8 @@ void OrbitCamera::update() {
 			return;
 		}
 	}
+	
+	time.update();
 	
 	
 	kinect->setTilt( listener.getDouble( "/tilt",0 ) );
@@ -121,34 +124,17 @@ Texture OrbitCamera::getTexture() {
 
 void OrbitCamera::save () {
 	
-	Json::Value writeVal = listener.get( "/write" );
+	//if ( !listener.getBool( "/record/enable" ))
+	//	return;
 	
-	if ( !writeVal.isString() ) {
-		return;
-	}
+
 	
-	string filename = writeVal.asString();
+	
+	
+	string filename = time.getFileName();
 	
 	if ( filename.length() < 1 ) {
 		return;
-	}
-	
-	string replace = string("$t");
-	size_t pos = filename.find( replace );
-	if ( pos != string::npos ) {
-		int64_t timeQuant = 500;
-		
-		milliseconds ms = duration_cast<milliseconds>( high_resolution_clock::now().time_since_epoch() );
-		long long time = ms.count();
-		time = time / timeQuant;
-		time = time * timeQuant;
-		
-		stringstream timeStr;
-		timeStr << time;
-		
-		filename.replace( pos, replace.length(), timeStr.str() );
-		
-		
 	}
 	
 	if ( filename == lastFilename ) {

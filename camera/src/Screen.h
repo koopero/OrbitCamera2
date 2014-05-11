@@ -15,8 +15,12 @@
 #include <iostream>
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Vbo.h"
+#include "cinder/gl/Texture.h"
 #include "Layer.h"
 #include "Feedback.h"
+#include "OrbitCamera.h"
+#include "FrameCache.h"
+#include "TimeRanger.h"
 
 using namespace std;
 using namespace ci;
@@ -27,7 +31,7 @@ public:
 	void setPath( string path );
 	void setup( int numLayers );
 	
-	void setInput( Texture input );
+	void takeInput( OrbitCamera * camera, FrameCache * frames );
 	void update();
 	void render();
 	void draw();
@@ -37,13 +41,17 @@ public:
 	int screenWidth = 1280;
 	int screenHeight = 960;
 	
+	
 protected:
 	vector<Layer> layers;
 	Feedback inputBuffer;
 	Feedback outputBuffer;
 	Listener listener;
+	TimeRanger inputFile;
 	
 	VboMesh mesh;
+	
+	Area bounds = Area( 0, 0, 480, 480) ;
 	
 	void setupMesh();
 	

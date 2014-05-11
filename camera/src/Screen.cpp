@@ -19,6 +19,8 @@ void Screen::setPath( string path ) {
 	}
 	
 	inputBuffer.setPath( path + "/input/feedback/" );
+	
+	inputFile.setPath( path +"/input" );
 }
 
 void Screen::setup( int numLayers ) {
@@ -31,16 +33,33 @@ void Screen::setup( int numLayers ) {
 	
 	inputBuffer.setup();
 	
-	outputBuffer.setup( 480, 480 );
+	outputBuffer.setup( bounds.getWidth(), bounds.getHeight() );
 	
 	setupMesh();
 }
 
-void Screen::setInput( Texture input ) {
-	inputBuffer.add( input );
+void Screen::takeInput(OrbitCamera *camera, FrameCache *frames) {
+	if ( listener.getBool( "/input/camera" ) ) {
+		inputBuffer.add( camera->getTexture() );
+	} else {
+		string url = inputFile.getFileName();
+		
+		if ( url.length() ) {
+			
+			cout << "Taking frame " << url << endl;
+			
+			Texture tex = frames->getFrame( url );
+			if ( tex ) {
+				inputBuffer.add( tex );
+			}
+		}
+	}
+	
 }
 
 void Screen::update() {
+	
+	inputFile.update();
 	
 	inputBuffer.feedback();
 	
@@ -72,24 +91,41 @@ void Screen::render() {
 	gl::pushMatrices();
 	
 	//outputBuffer.add( input );
-	//outputBuffer.feedback();
+	outputBuffer.feedback();
 	outputBuffer.bind();
+	
+	
+	Vec3f rotate = listener.getVec3f( "rotate" );
+	
+	
+	gl::color( 0,0,0,0 );
 	gl::clear();
 	
-	gl::setMatricesWindow( 480, 480 );
-	gl::translate( 0, 480 );
-	gl::scale( 1, -1 );
+	gl::setMatricesWindowPersp( outputBuffer.getSize(), 90, -1, 3, true );
 	
-	//gl::color( 1,1,0,1 );
+	//gl::setMatricesWindow( 480, 480 );
+	gl::translate( bounds.getCenter() );
+	float scale = bounds.getWidth() / 2;
+	gl::rotate( Vec3f( rotate.x,rotate.y,0 ) );
+	gl::scale( scale, -scale, 100 );
+	
+	//
 	
 	for ( vector<Layer>::iterator layer = layers.begin(); layer != layers.end(); ++layer ) {
 		layer->draw( input );
 	}
 	
 	//gl::draw( input );
-	gl::enable( GL_ALPHA );
-	gl::color( 0,1,0,1 );
-	drawSolidCircle( Vec2f( 0, 30 ), 60 );
+	glEnable(GL_ALPHA);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE );
+	glBlendEquation(GL_FUNC_ADD);
+	
+	
+	
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	//gl::color( 0,1,1,1 );
+	//drawSolidCircle( Vec2f( 0, 30 ), 600 );
 	
 	outputBuffer.unbind();
 	gl::popMatrices();
@@ -105,14 +141,29 @@ void Screen::draw() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE );
 	glBlendEquation(GL_FUNC_ADD);
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
 	color( 1,1,1,1);
-	gl::draw( input );
+	//gl::draw( input );
 	
-	//gl::draw( buffer, Vec2f( 0, 480 ) );
-	//buffer.enableAndBind();
+	buffer.enableAndBind();
+	gl::draw( mesh );
+	buffer.unbind();
+	
+	//gl::draw( buffer );
+	
+	//input.enableAndBind();
 	//gl::draw( mesh );
-	//buffer.unbind();
+	//input.unbind();
+	
+	
+	
+	//glBlendFunc(GL_ONE, GL_ONE );
+	//glBlendEquation(GL_FUNC_ADD);
+	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	//gl::draw( buffer, Vec2f( 0, 0 ) );
+	
+
 }
 
 void Screen::setupMesh() {
@@ -137,10 +188,10 @@ void Screen::setupMesh() {
     texCoords.push_back( Vec2f( 0, 1 ) );
     texCoords.push_back( Vec2f( 1, 1 ) );
 	
-	positions.push_back( Vec3f( 0,0,0 ) );
-	positions.push_back( Vec3f( 1280,0,0 ) );
-	positions.push_back( Vec3f( 0,960,0 ) );
-	positions.push_back( Vec3f( 1080,760,0 ) );
+	positions.push_back( (Vec3f) Vec2f( 0,0 ) );
+	positions.push_back( Vec3f( 1024,0,0 ) );
+	positions.push_back( Vec3f( 0,1024,0 ) );
+	positions.push_back( Vec3f( 1024,1024,0 ) );
 	
     
     mesh.bufferIndices( indices );

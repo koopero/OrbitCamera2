@@ -32,6 +32,8 @@ public:
 	void bind();
 	void unbind();
 	
+	Vec2i getSize();
+	
 	Texture getTexture();
 	
 protected:
@@ -39,6 +41,7 @@ protected:
 	Listener listener;
 	Fbo buffer[2];
 	HortenShader feedbackShader;
+	Vec2i _size;
 };
 
 #endif /* defined(__camera__Feedback__) */

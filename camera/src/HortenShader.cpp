@@ -34,6 +34,13 @@ ShaderVar::ShaderVar( const char * name, float defaultValue ) {
 	defaultFloat = defaultValue;
 }
 
+ShaderVar::ShaderVar( const char * name, const char * path, float defaultValue ) {
+	type = Type::Float;
+	ShaderVar::name = string( name );
+	ShaderVar::path = string( path );
+	defaultFloat = defaultValue;
+}
+
 ShaderVar::ShaderVar( string name, string path, float defaultValue ) {
 	type = Type::Float;
 	ShaderVar::name = name;
@@ -45,6 +52,13 @@ ShaderVar::ShaderVar( const char * name, Vec4f defaultValue ) {
 	type = Type::Vec4;
 	ShaderVar::name = string( name );
 	ShaderVar::path = string( name );
+	defaultVec4f = defaultValue;
+}
+
+ShaderVar::ShaderVar( const char * name, const char * path, Vec4f defaultValue ) {
+	type = Type::Vec4;
+	ShaderVar::name = string( name );
+	ShaderVar::path = string( path );
 	defaultVec4f = defaultValue;
 }
 
@@ -68,38 +82,13 @@ void ShaderVar::uniform(cinder::gl::GlslProg &shader, Listener &listener) {
 			}
 			shader.uniform( name, fVal );
 			
+			//cout << listener.path << path << " " << fVal << endl;
+			
 		}
 		break;
 			
 		case Type::Vec3: {
-			Vec3f v3Val = defaultVec3f;
-			
-			if ( v.isNumeric() ) {
-				
-				float fVal = v.asFloat();
-				v3Val = Vec3f( fVal, fVal, fVal );
-				
-			} else if ( v.isObject() ) {
-				if ( v["x"].isNumeric() ) {
-					v3Val.x = v["x"].asFloat();
-				} else if ( v["r"].isNumeric() ) {
-					v3Val.x = v["r"].asFloat();
-				}
-				
-				if ( v["y"].isNumeric() ) {
-					v3Val.y = v["y"].asFloat();
-				} else if ( v["g"].isNumeric() ) {
-					v3Val.y = v["g"].asFloat();
-				}
-				
-				if ( v["z"].isNumeric() ) {
-					v3Val.z = v["z"].asFloat();
-				} else if ( v["b"].isNumeric() ) {
-					v3Val.z = v["b"].asFloat();
-				}
-			}
-			
-			shader.uniform( name, v3Val );
+			shader.uniform( name, jsonToVec3f( v, defaultVec3f ) );
 		}
 		break;
 			
@@ -135,7 +124,7 @@ void ShaderVar::uniform(cinder::gl::GlslProg &shader, Listener &listener) {
 				}
 			}
 			
-			cout << "feedback multColour " << v4Val << endl;
+			//cout << "feedback multColour " << v4Val << endl;
 			
 			shader.uniform( name, v4Val );
 		}

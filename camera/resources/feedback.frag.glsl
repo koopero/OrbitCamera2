@@ -21,5 +21,5 @@ void main()
 	gl_FragColor.rgb = blur.rgb;
 	gl_FragColor.a = blur.a;
 	
-	gl_FragColor *= multColour;
+	//gl_FragColor *= multColour;
 }

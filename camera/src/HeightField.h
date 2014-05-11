@@ -22,6 +22,7 @@
 
 using namespace cinder;
 using namespace std;
+using namespace Horten;
 
 class HeightField {
 public:
@@ -30,7 +31,7 @@ public:
 	void updateShader ();
 	void draw ();
 	
-	Horten::Listener listener;
+	Listener listener;
 	
 	
 protected:

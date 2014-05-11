@@ -16,13 +16,15 @@ var W;
 
 async.series( [
 	initHorten,
+	initWildcat,
 	initPersistance,
 	initServers,
-	initWildcat
+	initDevices
+	
 ]);
 
 function initHorten( cb ) {
-	H.instance().debug = true;
+	H.instance().debug = !!conf.horten.debug;
 	cb();
 }
 
@@ -50,6 +52,19 @@ function initServers ( cb ) {
 	server.listenHttp();
 
 	cb();	
+}
+
+function initDevices ( cb ) {
+	require('./rack.js')( conf, W );
+
+	require('./camera.js')( conf, W );
+
+
+	H.set( W.file( conf.camera.record.path ).localPath, '/camera/0/path');
+
+
+
+	cb();
 }
 
 

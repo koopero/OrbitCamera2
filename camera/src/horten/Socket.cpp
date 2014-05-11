@@ -114,7 +114,7 @@ void Socket::socketThread() {
             
             Json::Value msg;
             
-			std::cout << buffer << std::endl;
+			//std::cout << buffer << std::endl;
             reader.parse( buffer, msg );
             
             Json::Value set = msg["set"];

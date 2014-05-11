@@ -12,7 +12,7 @@
 #include <string>
 #include <iostream>
 #include "cinder/gl/Fbo.h"
-#include "cinder/gl/Fbo.h"
+#include "cinder/gl/Vbo.h"
 #include "Layer.h"
 #include "Feedback.h"
 #include "HortenShader.h"
@@ -30,11 +30,20 @@ public:
 	void setPath( string path );
 	void setup();
 	void update();
+	void updateMesh ();
 	void draw( gl::Texture input );
 
 protected:
+	void meshGrid ( int width, int height, int depth = 1 );
+	
+	float _meshDetail	= 0;
+	
+	Area bounds = Area( 0, 0, 480, 480) ;
+	Area inputBounds;
+	
 	Listener listener;
 	HortenShader shader;
+	VboMesh mesh;
 };
 
 #endif /* defined(__camera__Layer__) */

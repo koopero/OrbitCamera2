@@ -18,22 +18,7 @@ void HeightField::update () {
 	updateShader();
 }
 
-void HeightField::updateMesh () {
-	
-	float meshDetail = listener.getDouble("/meshDetail", 1.0 );
-	meshDetail = meshDetail > 1.0 ? 1.0 : meshDetail < 0.0 ? 0.0 : meshDetail;
-	
-	if ( meshDetail == _meshDetail )
-		return;
-	
-	
-	int rows = roundf( powf( meshDetail, 2.0 ) * 240 ) + 6;
-	int cols = roundf( powf( meshDetail, 2.0 ) * 180 ) + 6;
-	
-	_meshDetail = meshDetail;
-	
-	meshGrid( rows, cols, 1 );
-}
+
 
 void HeightField::updateShader () {
 	if ( !shader ) {
@@ -75,6 +60,23 @@ void HeightField::draw() {
 	}
 	
 	shader.unbind();
+}
+
+void HeightField::updateMesh () {
+	
+	float meshDetail = listener.getDouble("/meshDetail", 1.0 );
+	meshDetail = meshDetail > 1.0 ? 1.0 : meshDetail < 0.0 ? 0.0 : meshDetail;
+	
+	if ( meshDetail == _meshDetail )
+		return;
+	
+	
+	int rows = roundf( powf( meshDetail, 2.0 ) * 240 ) + 6;
+	int cols = roundf( powf( meshDetail, 2.0 ) * 180 ) + 6;
+	
+	_meshDetail = meshDetail;
+	
+	meshGrid( rows, cols, 1 );
 }
 
 void HeightField::meshGrid( int width, int height, int depth ) {

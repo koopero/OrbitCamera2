@@ -21,6 +21,8 @@
 #include "horten/Horten.h"
 #include "horten/Listener.h"
 
+#include "TimeRanger.h"
+
 using namespace std;
 using namespace ci;
 using namespace ci::gl;
@@ -40,6 +42,8 @@ protected:
 	Fbo			buffer;
 	GlslProg	sRToAlpha;
 	Listener	listener;
+	
+	TimeRanger	time;
 	
 	Texture		colourTexture, depthTexture;
 	
