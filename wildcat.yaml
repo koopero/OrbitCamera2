@@ -2,6 +2,15 @@ streams:
   camera:
     path: "/camera/**/*.png"
 
+  toGif:
+    path: /toGif/**/*/
+
+  gif:
+    path: /gif/**/**.gif
+    input: toGif
+    build: TBA
+
+
   default:
     path: "**"
 

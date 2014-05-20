@@ -46,7 +46,7 @@ void Screen::takeInput(OrbitCamera *camera, FrameCache *frames) {
 		
 		if ( url.length() ) {
 			
-			cout << "Taking frame " << url << endl;
+			//cout << "Taking frame " << url << endl;
 			
 			Texture tex = frames->getFrame( url );
 			if ( tex ) {
