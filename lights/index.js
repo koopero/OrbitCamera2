@@ -1,7 +1,23 @@
 var H = require('horten');
+H.instance().debug = true;
 
+var config = require('js-yaml').safeLoad( require('fs').readFileSync( require('path').resolve( __dirname, '../config.yaml'), { encoding: 'utf8'} ) );
 
+var controlUrl = config.control.url + config.lights.path;
+console.log( "controlUrl", controlUrl );
 
+var client = H.Client( controlUrl, {} );
+client.pull();
+
+H.listen( '/', function ( v, p ) {
+	iterate( v );
+});
+
+function iterate( conf ) {
+	console.log( 'iterate', conf );
+}
+
+/*
 var SPI = require('spi');
 
 var spi = new SPI.Spi('/dev/spidev0.0', {
@@ -39,7 +55,7 @@ for ( ; i < numLeds * 3 + 4; i ++ ) {
 spi.write( buff, function ( device, buf2 ) {
 	console.log('Wrote');
 } );
-
+*/
 
 /*
 var leds = require("rpi-ws2801");

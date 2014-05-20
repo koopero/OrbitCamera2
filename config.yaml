@@ -1,6 +1,12 @@
 horten:
   debug: true
 
+control:
+  url: ws://panjandrum.local:7777/
+
+lights:
+  path: control/lights
+
 camera:
   toGif:
     path: "/toGif/$t/$i.png"

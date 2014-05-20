@@ -47,7 +47,7 @@ function initServers ( cb ) {
 
 
 	var server = new (H.Server)( {
-		url: 'http://panjandrum.local:8999/'
+		url: conf.control.url
 	});
 	server.listenHttp();
 
