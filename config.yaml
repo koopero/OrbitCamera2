@@ -3,11 +3,12 @@ horten:
 
 camera:
   toGif:
-    path: ""
+    path: "/toGif/$t/$i.png"
 
   record: 
     path: "/camera/record/$t.png"
 
+  frameTime: 500
 
 hss:
   port: 8765
