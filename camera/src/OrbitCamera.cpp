@@ -27,10 +27,12 @@ void OrbitCamera::setup() {
 	gl::Fbo::Format format;
 	format.enableColorBuffer();
 	
-	buffer = gl::Fbo( 640, 480, format );
+	buffer = gl::Fbo( 480, 480, format );
 }
 
 void OrbitCamera::update() {
+	
+	
 	
 	if ( !kinect ) {
 		try {
@@ -41,8 +43,9 @@ void OrbitCamera::update() {
 		}
 	}
 	
-	time.update();
 	
+	
+	//return;
 	
 	kinect->setTilt( listener.getDouble( "/tilt",0 ) );
 	
@@ -53,32 +56,33 @@ void OrbitCamera::update() {
 		colourTexture = kinect->getVideoImage();
 	
 	
-	if ( !depthTexture || !colourTexture )
+	if ( !depthTexture || depthTexture.getWidth() != 640 || !colourTexture || colourTexture.getWidth() != 640 )
 		return;
 	
 	buffer.bindFramebuffer();
+	
 	setViewport( buffer.getBounds() );
-	setMatricesWindow( 640, 480 );
+	setMatricesWindow( buffer.getSize() );
+	
 	Matrix44f flip = Matrix44f::identity();
 	flip.scale( Vec2f( 1,-1 ) );
 	flip.translate(Vec3f( 0,-480,0));
 	
 	glEnable( GL_ALPHA );
+	glEnable( GL_LINEAR );
+	
 	gl::multModelView( flip );
+	
 	gl::clear( ColorAf( 0,0,0,0));
 	
-	float alignScale = listener.getDouble( "/align/s", 0.8 );
-	Matrix44f align = Matrix44f::identity();
-	align.scale( alignScale );
+	
 	
 	gl::pushModelView();
-	glMatrixMode( GL_MODELVIEW );
-	gl::translate( listener.getDouble("/align/x",0 ), listener.getDouble("/align/y",0 ) );
+	float alignScale = listener.getDouble( "/align/depth/s", 0.8 );
+	gl::translate( listener.getDouble("/align/depth/x",0 ) - 80.0, listener.getDouble("/align/depth/y",0 ) );
 	gl::scale( Vec2f( alignScale, alignScale ) );
 	//gl::multProjection( align );
-	gl::multModelView( align );
-	
-	
+
 	glEnable(GL_BLEND);
 	glBlendFuncSeparate(GL_ZERO, GL_ZERO, GL_ONE, GL_ZERO);
 	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
@@ -91,15 +95,17 @@ void OrbitCamera::update() {
 	gl::popModelView();
 	
 	
-	
-	flip.scale( Vec2f( 1,-1) );
-	flip.translate( Vec3f( 0,-480,0));
+	gl::pushModelView();
+	alignScale = listener.getDouble( "/align/colour/s", 0.8 );
+	gl::translate( listener.getDouble("/align/colour/x",0 ) - 80.0, listener.getDouble("/align/colour/y",0 ) );
+	gl::scale( Vec2f( alignScale, alignScale ) );
 	
 	glEnable(GL_BLEND);
 	glBlendFuncSeparate(GL_ONE, GL_ZERO, GL_ZERO, GL_ONE);
 	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 	gl::draw( colourTexture, depthTexture.getBounds() );
 	
+	gl::popModelView();
 	buffer.unbindFramebuffer();
 }
 
@@ -127,11 +133,19 @@ void OrbitCamera::save () {
 	//if ( !listener.getBool( "/record/enable" ))
 	//	return;
 	
-
+	if ( !buffer ) {
+		return;
+	}
 	
+	time.update();
 	
+	//return;
 	
 	string filename = time.getFileName();
+	//string filename = "/Volumes/hdd/koop/Code/Orbit2/data/camera/00.png";
+	//std::cout << "Filename " << filename << std::endl;
+	
+	//return;
 	
 	if ( filename.length() < 1 ) {
 		return;
@@ -141,7 +155,7 @@ void OrbitCamera::save () {
 		return;
 	}
 	
-	std::cout << "Filename " << filename << std::endl;
+	//return;
 	
 	ImageTarget::Options options;
 	//try {
@@ -150,6 +164,6 @@ void OrbitCamera::save () {
 	//	cerr << e.what() << endl;
 	//}
 	
-	lastFilename  = filename;
+	lastFilename = filename;
 }
 

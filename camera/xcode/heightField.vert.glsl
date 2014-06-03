@@ -42,22 +42,32 @@ void main()
 	
 	vec4 pos = gl_Vertex;
 
-	pos.z = mix(z0,z1,z);
+	float zz = pow( (source.a), 1.1 );
 	
+	pos.z = zz * 6.0 - 6.0 * 0.8;
+	pos.xy = pos.xy / ( zz + 0.6 ) ;
 	//gl_Position.xyz = pos;
-	gl_Position = gl_ModelViewProjectionMatrix * pos;
+	
+	vec4 screenPos = gl_ModelViewProjectionMatrix * pos;
+	
+	float r = length( screenPos.xy );
+	r = pow( r, 1.18 - zz * 0.18 ) / 1.3;
+	
+	screenPos.xy = normalize( screenPos.xy ) * r;
+	
+	gl_Position = screenPos;
 	//gl_Position.x += z * 0.2;
 	//gl_Position.y += z * 0.1;
 	//gl_Position.z = z;
 
-	colourMult = mix( colour0, colour1, z );
-	colourAdd = vec4( 0.0,0.0,0.0,0.0 );
+	colourMult = vec4( 0.0,0.0,0.0,0.0 );
+	colourAdd = mix( colour0, colour1, z ) * source;
 	
 	
 	
 	//colourMult.rgb *= 1.0 - colourDetail;
-	colourAdd = source * ( 1.0 - colourDetail ) * colourMult;
-	colourMult *= colourDetail;
+	//colourAdd = source * ( 1.0 - colourDetail ) * colourMult;
+
 	//colourAdd.r += offCentre;
 	//colourAdd.a = z;
 

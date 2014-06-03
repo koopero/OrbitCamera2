@@ -25,19 +25,38 @@ bool FrameCache::Frame::load( string url ) {
 			frame = loadImage( url );
 			loaded = true;
 		} catch ( ImageIoException e ) {
-			cerr << "Failed to load " << e.what() << endl;
+			error = true;
+			cerr << "Failed to load frame " << url << endl;
 		}
 	}
 	
 	return loaded;
 };
 
+void FrameCache::cleanCache() {
+	while ( cache.size() > maxSize ) {
+		UInt64 oldest = 0;
+		string del;
+		
+		for ( map<string,Frame>::iterator i = cache.begin(); i != cache.end(); ++i ) {
+			if ( !del.size() || i->second.atime < oldest ) {
+				del = i->first;
+				oldest  =i->second.atime;
+			}
+		}
+		
+		cache.erase( del );
+	}
+}
+
 Texture FrameCache::getFrame(const string &url) {
 	Frame &frame = cache[url];
 	
-	if ( !frame.loaded ) {
+	if ( !frame.loaded && !frame.error ) {
 		frame.load( url );
 	}
 	
+	frame.atime = wallTimeMS();
+
 	return frame.frame;
 }

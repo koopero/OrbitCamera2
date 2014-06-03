@@ -1,10 +1,13 @@
 var H = require('horten');
 H.instance().debug = true;
 
+
 var config = require('js-yaml').safeLoad( require('fs').readFileSync( require('path').resolve( __dirname, '../config.yaml'), { encoding: 'utf8'} ) );
 
 var controlUrl = config.control.url + config.lights.path;
-console.log( "controlUrl", controlUrl );
+
+
+var spi = initLeds();
 
 var client = H.Client( controlUrl, {} );
 client.pull();
@@ -13,17 +16,63 @@ H.listen( '/', function ( v, p ) {
 	iterate( v );
 });
 
+
+
+
 function iterate( conf ) {
 	console.log( 'iterate', conf );
+
+	var buffer = [];
+	clear( buffer );
+
+}
+
+
+var numRGB = 56;
+var numV = numRGB * 3;
+
+
+function clear ( buffer ) {
+	for ( var i = 0; i < numRGB; i ++ ) {
+		buffer[i] = 0;
+	}
+
+}
+
+function wash( buffer, conf ) {
+
+
+}
+
+function byteValue ( f ) {
+	f = f || 0;
+	f = f < 0 ? 0 : f > 1 ? 1 : f;
+	return 0x80 | parseInt( Math.pow(f,gamma) * 127 );
+}
+
+function write( buffer ) {
+	buffer = buffer.map( byteValue );
+	for ( var i = 0; i < 4; i ++ ) {
+		buffer[numRGB+i] = 0;
+	}
+	
+	buffer = new Buffer( buffer );
+	spi.write( buffer );
+}
+
+function initLeds () {
+	var SPI = require('spi');
+
+	var spi = new SPI.Spi('/dev/spidev0.0', {
+		mode: SPI.MODE['MODE_0'],
+		'chipSelect': SPI.CS['none']
+	}, function ( s ) { s.open(); } );
+
+	return spi;
 }
 
 /*
-var SPI = require('spi');
 
-var spi = new SPI.Spi('/dev/spidev0.0', {
-	mode: SPI.MODE['MODE_0'],
-	'chipSelect': SPI.CS['none']
-}, function ( s ) { s.open(); } );
 
 var numLeds = 56;
 var gamma = 2.2;
@@ -39,11 +88,6 @@ for ( var i = 0; i < numLeds * 3; i += 3 ) {
 	buff.writeUInt8( byteValue( r ), i + 1);
 	buff.writeUInt8( byteValue( b ), i + 2);
 
-	function byteValue ( f ) {
-		f = f || 0;
-		f = f < 0 ? 0 : f > 1 ? 1 : f;
-		return 0x80 | parseInt( Math.pow(f,gamma) * 127 );
-	}
 
 }
 

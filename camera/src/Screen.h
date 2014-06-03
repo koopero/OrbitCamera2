@@ -15,7 +15,11 @@
 #include <iostream>
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Vbo.h"
+#include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Texture.h"
+
+#include "CinderOpenCV.h"
+
 #include "Layer.h"
 #include "Feedback.h"
 #include "OrbitCamera.h"
@@ -42,18 +46,24 @@ public:
 	int screenHeight = 960;
 	
 	
+	Vec2f rotation;
+	
 protected:
 	vector<Layer> layers;
 	Feedback inputBuffer;
 	Feedback outputBuffer;
 	Listener listener;
+	Listener global;
 	TimeRanger inputFile;
 	
 	VboMesh mesh;
 	
 	Area bounds = Area( 0, 0, 480, 480) ;
 	
+		
 	void setupMesh();
+	
+	GlslProg inputAlignShader;
 	
 	Vec2f corner[4];
 };

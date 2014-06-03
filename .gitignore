@@ -1,5 +1,6 @@
 node_modules
 data/
+progress/
 
 .DS_Store
 *.swp

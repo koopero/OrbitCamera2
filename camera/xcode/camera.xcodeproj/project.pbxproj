@@ -50,6 +50,7 @@
 		74AF4F0D191C7F4F009005DA /* FrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AF4F0B191C7F4F009005DA /* FrameCache.cpp */; };
 		74AF4F11191CDC69009005DA /* JsonToCinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AF4F0F191CDC69009005DA /* JsonToCinder.cpp */; };
 		74AF4F14191F4017009005DA /* TimeRanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74AF4F12191F4017009005DA /* TimeRanger.cpp */; };
+		74D7E7FD1931944E00ACC2F4 /* inputAlign.frag.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 74D7E7FC1931944E00ACC2F4 /* inputAlign.frag.glsl */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AC61F350C88548E191797E22 /* cameraApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF766C176E8404BAA562EB5 /* cameraApp.cpp */; };
 		F117D0C0D9FB4EF7A1770CF3 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B0921FDB7645F4AB2E917A /* IOKit.framework */; };
@@ -140,6 +141,7 @@
 		74AF4F10191CDC69009005DA /* JsonToCinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsonToCinder.h; path = ../src/JsonToCinder.h; sourceTree = "<group>"; };
 		74AF4F12191F4017009005DA /* TimeRanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeRanger.cpp; path = ../src/TimeRanger.cpp; sourceTree = "<group>"; };
 		74AF4F13191F4017009005DA /* TimeRanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeRanger.h; path = ../src/TimeRanger.h; sourceTree = "<group>"; };
+		74D7E7FC1931944E00ACC2F4 /* inputAlign.frag.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = inputAlign.frag.glsl; path = ../resources/inputAlign.frag.glsl; sourceTree = "<group>"; };
 		791B1828308847249D2438D3 /* usb_libusb10.c */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = usb_libusb10.c; path = "../blocks/Cinder-Freenect/src/freenect/usb_libusb10.c"; sourceTree = "<group>"; };
 		881E45D2B59C456F9F0B924D /* registration.c */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = registration.c; path = "../blocks/Cinder-Freenect/src/freenect/registration.c"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -270,6 +272,7 @@
 				74A0106418E691E0002D3D13 /* heightField.vert.glsl */,
 				74A0106618E691FC002D3D13 /* heightField.frag.glsl */,
 				748859E11917490D00B17DCD /* feedback.frag.glsl */,
+				74D7E7FC1931944E00ACC2F4 /* inputAlign.frag.glsl */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				74A0104B18E40410002D3D13 /* horten-all-target-headers.hmap in Resources */,
 				F166812D0A4B4E5FBB194A90 /* CinderApp.icns in Resources */,
 				74AA504F18CEDB7400002EAD /* passthru.vert.glsl in Resources */,
+				74D7E7FD1931944E00ACC2F4 /* inputAlign.frag.glsl in Resources */,
 				74A0105518E40410002D3D13 /* json_valueiterator.inl in Resources */,
 				74A0104F18E40410002D3D13 /* horten.hmap in Resources */,
 			);
@@ -541,10 +545,26 @@
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
 					"\"../blocks/Cinder-Freenect/lib/macosx/libusb-1.0.a\"",
+					../blocks/OpenCV/lib/macosx/libopencv_calib3d.a,
+					../blocks/OpenCV/lib/macosx/libopencv_contrib.a,
+					../blocks/OpenCV/lib/macosx/libopencv_core.a,
+					../blocks/OpenCV/lib/macosx/libopencv_features2d.a,
+					../blocks/OpenCV/lib/macosx/libopencv_flann.a,
+					../blocks/OpenCV/lib/macosx/libopencv_gpu.a,
+					../blocks/OpenCV/lib/macosx/libopencv_imgproc.a,
+					../blocks/OpenCV/lib/macosx/libopencv_legacy.a,
+					../blocks/OpenCV/lib/macosx/libopencv_ml.a,
+					../blocks/OpenCV/lib/macosx/libopencv_nonfree.a,
+					../blocks/OpenCV/lib/macosx/libopencv_objdetect.a,
+					../blocks/OpenCV/lib/macosx/libopencv_photo.a,
+					../blocks/OpenCV/lib/macosx/libopencv_stitching.a,
+					../blocks/OpenCV/lib/macosx/libopencv_ts.a,
+					../blocks/OpenCV/lib/macosx/libopencv_video.a,
+					../blocks/OpenCV/lib/macosx/libopencv_videostab.a,
 				);
 				PRODUCT_NAME = camera;
 				SYMROOT = ./build;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"../blocks/Cinder-Freenect/src\" \"../blocks/opencv/src\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"../blocks/Cinder-Freenect/src\" \"../blocks/OpenCV/include\" \"../blocks/OpenCV/include/opencv2\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -567,11 +587,27 @@
 				OTHER_LDFLAGS = (
 					"\"$(CINDER_PATH)/lib/libcinder.a\"",
 					"\"../blocks/Cinder-Freenect/lib/macosx/libusb-1.0.a\"",
+					../blocks/OpenCV/lib/macosx/libopencv_calib3d.a,
+					../blocks/OpenCV/lib/macosx/libopencv_contrib.a,
+					../blocks/OpenCV/lib/macosx/libopencv_core.a,
+					../blocks/OpenCV/lib/macosx/libopencv_features2d.a,
+					../blocks/OpenCV/lib/macosx/libopencv_flann.a,
+					../blocks/OpenCV/lib/macosx/libopencv_gpu.a,
+					../blocks/OpenCV/lib/macosx/libopencv_imgproc.a,
+					../blocks/OpenCV/lib/macosx/libopencv_legacy.a,
+					../blocks/OpenCV/lib/macosx/libopencv_ml.a,
+					../blocks/OpenCV/lib/macosx/libopencv_nonfree.a,
+					../blocks/OpenCV/lib/macosx/libopencv_objdetect.a,
+					../blocks/OpenCV/lib/macosx/libopencv_photo.a,
+					../blocks/OpenCV/lib/macosx/libopencv_stitching.a,
+					../blocks/OpenCV/lib/macosx/libopencv_ts.a,
+					../blocks/OpenCV/lib/macosx/libopencv_video.a,
+					../blocks/OpenCV/lib/macosx/libopencv_videostab.a,
 				);
 				PRODUCT_NAME = camera;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"../blocks/Cinder-Freenect/src\" \"../blocks/opencv/src\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include \"../blocks/Cinder-Freenect/src\" \"../blocks/OpenCV/include\" \"../blocks/OpenCV/include/opencv2\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

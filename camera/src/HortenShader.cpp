@@ -133,7 +133,7 @@ void ShaderVar::uniform(cinder::gl::GlslProg &shader, Listener &listener) {
 }
 
 void HortenShader::setPath(string path) {
-	cout << "HortenShader Path " << path << endl;
+	//cout << "HortenShader Path " << path << endl;
 	listener.path = path;
 }
 

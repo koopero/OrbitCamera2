@@ -34,7 +34,7 @@ public:
 	void draw( gl::Texture input );
 
 protected:
-	void meshGrid ( int width, int height, int depth = 1 );
+	void meshGrid ( int mode, int width, int height, int depth = 1 );
 	
 	float _meshDetail	= 0;
 	

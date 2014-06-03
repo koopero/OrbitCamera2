@@ -1,6 +1,7 @@
 #version 120
 #define PI 3.1415926535897932384626433832795
 
+uniform float blurAmount;
 uniform sampler2D tex0;
 uniform vec4 multColour;
 
@@ -18,8 +19,7 @@ void main()
 		vec4 blurSample = texture2D( tex0, gl_TexCoord[0].xy + offset );
 		blur += blurSample / 8.0;
 	}
-	gl_FragColor.rgb = blur.rgb;
-	gl_FragColor.a = blur.a;
+	gl_FragColor = mix( tex, blur, blurAmount ) * multColour;
 	
 	//gl_FragColor *= multColour;
 }

@@ -7,75 +7,115 @@ module.exports = function ( C, W ) {
 	var controlPath = H.Path("/control/camera");
 	var listener = H.listen( controlPath );
 
-	H.listen( H.Path( controlPath, "shutter" ), start );
+	H.listen( H.Path( controlPath, "shutter" ), function ( v ) {
+		if ( v )
+			start();
+	} );
+
+
 
 	var startTime,
-		iter,
-		_quant = 100;
+		recordPath = C.record.path,
+		recordFile = W.file( recordPath ),
+		recordPathLocal = recordFile.localPath,
+		maxTime = 60 * 1000,
+		quant = 300,
+		posterTime = 100,
+		outputDir,
+		frame;
+
+
+	recordFile.mkdir();
+
+
+
+	H.set( recordPathLocal, '/camera/0/path');
+
+
 
 	function start ( v ) {
-		if ( !v )
-			return;
+		var now = new Date().getTime();
+		frame = null;
 
-		if ( iter )
-			return;
+		outputDir = W.file ( "/picture/"+timeCode()+"/" );
 
-		startTime = new Date().getTime();
-		iter = setInterval( iterate, 500 );
+		quant = listener.get('quant/value');
+
+		H.set( {
+			enable: 1,
+			path: recordPathLocal,
+			quant: 100,
+		}, '/camera/0' );
+
+
+		startTime = quantTime( now, quant );
+
+		iterate();
 	}
 
+
+
 	function iterate () {
-		var now = new Date().getTime();
+		var now = quantTime( new Date().getTime() );
 		var t = now - startTime;
 
-		console.log( "Camera iter", t );
+		var state = listener.get();
 
-		if ( t > 3000 )
+		frame = recordedFileAtTime( now, quant );
+
+		
+
+		var output = outputDir.file( 'frames/' +String( now ) + '.png' );
+
+		//console.log ( "STORE", frame, output );
+
+		output.store( frame, { link: true }, function ( err ) {
+			//console.log( "Stored", err );
+		} );
+
+		//console.log( "frame", t, output );
+
+		if ( state.shutter && t < maxTime ) {
+			setTimeout( iterate, quant );
+		} else {
 			end();
+		}
+
 	}
 
 	function end () {
-		clearInterval( iter );
-		
-		iter = null;
+		var now = new Date().getTime();
+		var t = now - startTime;
 
-		H.set( {
-			start: startTime,
-			loop: 3000
-		}, "control/screen/input" );
+		var sequenceFile = outputDir.file( 'sequence.json' )
 
-		listener.set( 0, "shutter" );
+		var sequence = {
+			quant: 	quant,
+			offset: quantTime( startTime, quant ),
+			start: 	startTime,
+			loop: 	quantTime( now - startTime, quant ),
+			path: 	recordPathLocal
+		};
 
-		var toGif = C.camera.toGif.path.replace( "$t", timeCode( startTime ) );
+		sequenceFile.storeData ( sequence );
 
-		console.log( "TO GIF", toGif );
+		listener.set( sequence, '/lastPicture/' );
+		listener.set( 0, 'shutter' );
 
-		linkGifSources( function (err) {
-			console.log( "GIF Sources Linked" );
-		} );
+		var posterFrame = recordedFileAtTime( startTime + posterTime, quant );
 
-		function linkGifSources ( cb ) {
-			var offsets = [ 0, 100, 200, 300, 400 ];
-			var i = 0;
-
-			async.mapSeries( offsets, function ( offset, cb ) {
-				var png = recordedFileAtTime( startTime + offset );
-				var destPath = toGif.replace ( '$i', String(i) );
-				var dest = W.file( destPath );
-				dest.store( png, { link: true }, cb );
-				i++;
-			}, cb );
-		}
-
-		function saveSpec ( cb ) {
-
-		}
-
-		function savePoster ( cb ) {
-
-		}
+		var poster = outputDir.file( 'poster.png' );
+		poster.store( posterFrame );
 
 		
+		console.log( "poster.stream.name", poster.stream.name)
+		poster.relatives ( { inputs: true, outputs: true, source: true, affected: true }, function ( err, rel ) {
+			console.log( "poster.relatives()", err, rel )
+		});
+		//console.log( "poster.relative",poster.relative('sequence') )
+		
+		outputDir.file('frames/').touch();
+
 	}
 
 
@@ -92,7 +132,7 @@ module.exports = function ( C, W ) {
 
 	function quantTime ( time, quant ) {
 		if ( isNaN( quant ) )
-			quant = _quant;
+			quant = 100;
 
 		if ( isNaN( time ) )
 			time = Math.floor( new Date().getTime() );
@@ -114,11 +154,10 @@ module.exports = function ( C, W ) {
 
 	function recordedFileAtTime ( time, quant ) {
 		time = quantTime ( time, quant );
-		var filename = C.camera.record.path;
+		var filename = recordPath;
 		filename = filename.replace ( "$t", zeroPadTime( time ) );
 
 		return W.file( filename );
 	}
-
 
 }

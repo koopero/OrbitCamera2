@@ -52,13 +52,23 @@ void Layer::draw( Texture input ) {
 	glBlendColor( 1, 1, 1, 1 );
 	glEnable(GL_ALPHA);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE );
 	glBlendEquation(GL_FUNC_ADD);
+
 	
+	float pointSize = pow( 3, listener.getDouble( "pointSize", 0 ) * 3 );
+	
+	glPointSize( pointSize );
+	glLineWidth( pointSize  );
 	
 	switch ( mode ) {
 		case 1:
 			glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		break;
+			
+		case 2:  // Points
+			glEnable( GL_POINT_SPRITE );
+
 		break;
 			
 		default:
@@ -88,25 +98,39 @@ void Layer::updateMesh () {
 		return;
 	
 	
+	int mode = (int) listener.getDouble("mesh/mode/value", 0 );
+	
 	int rows = roundf( powf( meshDetail, 2.0 ) * 240 ) + 6;
 	int cols = roundf( powf( meshDetail, 2.0 ) * 180 ) + 6;
 	
 	_meshDetail = meshDetail;
 	
-	meshGrid( rows, cols, 1 );
+	meshGrid( mode, rows, cols, 1 );
 }
 
-void Layer::meshGrid( int width, int height, int depth ) {
-	bool quad = true;
+void Layer::meshGrid( int mode, int width, int height, int depth ) {
+	bool quad = false;
 	
 	gl::VboMesh::Layout layout;
 	layout.setStaticIndices();
 	layout.setStaticPositions();
 	layout.setStaticTexCoords3d();
 	
+	
 	int totalVertices = width * height * depth;
-	int totalQuads = ( width - 1 ) * ( height - 1 ) * depth;
-	mesh = VboMesh( totalVertices, totalQuads * 4, layout, GL_QUADS );
+
+	switch ( mode ) {
+		case 2: // Points
+			mesh = VboMesh( totalVertices, totalVertices, layout, GL_POINTS );
+		break;
+		default:
+			quad = true;
+			int totalQuads;
+			totalQuads = ( width - 1 ) * ( height - 1 ) * depth;
+			mesh = VboMesh( totalVertices, totalQuads * 4, layout, GL_QUADS );
+		break;
+	}
+
 	
 	// buffer our static data - the texcoords and the indices
 	vector<uint32_t> indices;
@@ -124,6 +148,8 @@ void Layer::meshGrid( int width, int height, int depth ) {
 					indices.push_back( i + 1 );
 					indices.push_back( i + width + 1 );
 					indices.push_back( i + width );
+				} else if ( !quad ) {
+					indices.push_back( i );
 				}
 				
 				Vec3f index = Vec3f( x, y, z );

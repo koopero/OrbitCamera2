@@ -13,6 +13,7 @@
 #include <string>
 
 #include "cinder/gl/Texture.h"
+#include "TimeRanger.h"
 
 using namespace ci;
 using namespace ci::gl;
@@ -31,8 +32,12 @@ protected:
 	public:
 		Texture frame;
 		bool loaded = false;
+		bool error = false;
 		bool load( string url );
+		UInt64 atime;
 	};
+	
+	int maxSize = 500;
 	
 	map<string,Frame> cache;
 };

@@ -8,13 +8,12 @@ lights:
   path: control/lights
 
 camera:
-  toGif:
-    path: "/toGif/$t/$i.png"
-
   record: 
-    path: "/camera/record/$t.png"
+    path: "/camera/$t.png"
 
-  frameTime: 500
+manager:
+  port: 7778
+
 
 hss:
   port: 8765

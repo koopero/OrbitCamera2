@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
 #include <sys/time.h>
 #include <stdint.h>
@@ -39,6 +40,7 @@ private:
 	int64_t inTime = 0;
 	int64_t loop = 0;
 	int64_t	quant;
+	bool pingpong = false;
 	
 };
 

@@ -25,7 +25,7 @@ using namespace Horten;
 class Feedback {
 public:
 	void setPath( string path );
-	void setup ( int width = 640, int height = 480 );
+	void setup ( int width = 480, int height = 480 );
 	void clear ();
 	void add ( Texture const &tex );
 	void feedback ();

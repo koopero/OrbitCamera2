@@ -16,7 +16,7 @@ void Feedback::setPath(string path) {
 void Feedback::setup( int width, int height ) {
 	
 	feedbackShader.loadGlslResources( "passthru.vert.glsl", "feedback.frag.glsl" );
-	feedbackShader.addVar( ShaderVar( "multColour", Vec4f( 0.8, 0.8, 0.8, 0.8 ) ) );
+	feedbackShader.addVar( ShaderVar( "multColour", Vec4f( 0.8, 0.2, 0.2, 0.2 ) ) );
 	feedbackShader.addVar( ShaderVar( "blurAmount", "blur/amount", 0 ) );
 
 	_size = Vec2i( width, height );
@@ -81,19 +81,20 @@ void Feedback::feedback() {
 	Texture tex = buffer[read].getTexture();
 	buffer[write].bindFramebuffer();
 	
-	//color( 0,0,0,0 );
-	//clear();
-	
-	//feedbackShader.bind();
-	glDisable(GL_BLEND);
-	
-	color( 1,1,1,1);
+	color( 0,1,0,1 );
+	gl::clear();
 	
 	
-	
+	/*
+	color( 1,1,1,1 );
+	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA);
+	glBlendFunc(GL_ONE, GL_ZERO);
+	glBlendEquation(GL_FUNC_ADD);
+	feedbackShader.bind();
 	draw( tex );
-	//feedbackShader.unbind();
-	
+	feedbackShader.unbind();
+	*/
 	
 	//drawSolidCircle( Vec2f(0,0), 100 );
 	
@@ -101,7 +102,7 @@ void Feedback::feedback() {
 	
 	//std::cout << "CurBuffer" << curBuffer << std::endl;
 	
-	curBuffer = curBuffer ^ 1;
+	curBuffer = write;
 }
 
 void Feedback::bind() {
@@ -114,6 +115,7 @@ void Feedback::bind() {
 	gl::pushMatrices();
 	//gl::setMatricesWindowPersp( buffer[write].getSize(), 90, -1, 3, true );
 	gl::setMatricesWindow( buffer[write].getSize(), false );
+	gl::setViewport( Area( Vec2i( 0,0 ), _size ) );
 	
 	
 }

@@ -139,7 +139,17 @@ double Horten::getDouble ( const char *path, double defaultValue ) {
 
 double Horten::getDouble ( const std::string &path, double defaultValue ) {
     Json::Value v = get( path );
-    return v.isNumeric() ? v.asDouble() : defaultValue;
+	
+	if ( v.isNumeric() ) {
+		return v.asDouble();
+	} else if ( v.isObject() ) {
+		Json::Value &value = v["value"];
+		if ( value.isNumeric() )
+			return value.asDouble();
+		
+	}
+	
+    return defaultValue;
 }
 	
 	

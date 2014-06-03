@@ -17,18 +17,24 @@ Vec3f jsonToVec3f ( Value v, Vec3f val ) {
 			val.x = v["x"].asFloat();
 		} else if ( v["r"].isNumeric() ) {
 			val.x = v["r"].asFloat();
+		} else if ( v["0"].isNumeric() ) {
+			val.x = v["0"].asFloat();
 		}
 		
 		if ( v["y"].isNumeric() ) {
 			val.y = v["y"].asFloat();
 		} else if ( v["g"].isNumeric() ) {
 			val.y = v["g"].asFloat();
+		} else if ( v["1"].isNumeric() ) {
+			val.x = v["1"].asFloat();
 		}
 		
 		if ( v["z"].isNumeric() ) {
 			val.z = v["z"].asFloat();
 		} else if ( v["b"].isNumeric() ) {
 			val.z = v["b"].asFloat();
+		} else if ( v["2"].isNumeric() ) {
+			val.x = v["2"].asFloat();
 		}
 		
 	}

@@ -20,18 +20,22 @@ using namespace ci;
 
 
 
-class PNGWrite {
-public:
-	gl::TextureRef texture;
-	string filename;
-};
+
 
 class PNGWriter {
 public:
 
+	void save( gl::Texture tx, string filename );
+	
 private:
+	class PNGWrite {
+	public:
+		gl::Texture texture;
+		string filename;
+	};
+	
 	vector<PNGWrite> queue;
-	void writeNext ();
+	void writeThread ();
 	
 };
 

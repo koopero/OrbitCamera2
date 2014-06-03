@@ -91,6 +91,8 @@ void Socket::socketThread() {
 		string buffer;
         
 		bytes_recieved = recv( socketfd, &header, sizeof header, 0 );
+		
+		//std::cout << "received " << bytes_recieved << std::endl;
         
 		if ( bytes_recieved == sizeof header ) {
             

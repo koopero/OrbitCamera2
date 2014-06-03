@@ -35,6 +35,7 @@ class cameraApp : public AppBasic {
 	void setup();
 	void mouseDown( MouseEvent event );
     void keyDown( KeyEvent event );
+	void resize();
 	void update();
 	void draw();
 	
@@ -51,7 +52,7 @@ class cameraApp : public AppBasic {
 	gl::Fbo			mBuffer;
 	gl::GlslProg	mShader;
 	
-	int numScreens = 1;
+	int numScreens = 10;
 	int numLayers = 3;
 
 	vector<Screen>	screens;
@@ -62,7 +63,8 @@ private:
 
 void cameraApp::prepareSettings( Settings* settings )
 {
-	settings->setWindowSize( 1024, 1024 );
+	settings->setWindowSize( 2000, 800 );
+	settings->setFrameRate( 30 );
 }
 
 void cameraApp::initHorten () {
@@ -70,6 +72,14 @@ void cameraApp::initHorten () {
     socket.hostname = "127.0.0.1";
     socket.start();
 	
+}
+
+void cameraApp::resize() {
+	for ( vector<Screen>::iterator screen = screens.begin(); screen != screens.end(); ++screen )
+	{
+		screen->screenWidth = getWindowWidth();
+		screen->screenHeight = getWindowHeight();
+	}
 }
 
 void cameraApp::setup()
@@ -90,12 +100,14 @@ void cameraApp::setup()
 	
 	for ( int i = 0; i < numScreens; i ++ ) {
 		std::ostringstream path;
-		//path << "/screen/" << i << "/";
-		path << "control/screen/";
+		path << "/screen/" << i << "/";
+		//path << "control/screen/";
 		
 		screens[i].setPath( path.str() );
 		screens[i].setup( numLayers );
 	}
+	
+	resize();
 	
 
 }
@@ -111,11 +123,13 @@ void cameraApp::keyDown( KeyEvent event) {
 }
 
 
-
 void cameraApp::update()
 {
+	
+	
 	camera.update();
 	camera.save();
+	
 	
 	for ( vector<Screen>::iterator screen = screens.begin(); screen != screens.end(); ++screen )
 	{
@@ -123,6 +137,7 @@ void cameraApp::update()
 		screen->update();
 	}
 
+	frames.cleanCache();
 	
 //	/node.update();
 }
@@ -136,7 +151,7 @@ void cameraApp::draw()
 		//screen->draw();
 	}
 	
-	gl::clear( ColorAf( 0,0,0.2,0));
+	gl::clear( ColorAf( 0,0,0.0,0));
 	
 	gl::setViewport( getWindowBounds() );
 	gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
