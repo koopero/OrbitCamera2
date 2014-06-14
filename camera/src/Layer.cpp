@@ -22,8 +22,15 @@ void Layer::setup() {
 	shader.addVar( ShaderVar( "depth0", "back/depth", 0 ) );
 	shader.addVar( ShaderVar( "depth1", "front/depth", 1 ) );
 
-	shader.addVar( ShaderVar( "z0", "back/pos/z", 0 ) );
-	shader.addVar( ShaderVar( "z1", "front/pos/z", 1 ) );
+	shader.addVar( ShaderVar( "perspZMult", 8 ) );
+	shader.addVar( ShaderVar( "perspZPow", 1.1 ) );
+	shader.addVar( ShaderVar( "perspZAdd", 0.8 ) );
+	
+	shader.addVar( ShaderVar( "frustZMult", 1 ) );
+	shader.addVar( ShaderVar( "frustZAdd", 0.6 ) );
+
+	shader.addVar( ShaderVar( "fishAdd", 0.18 ) );
+	shader.addVar( ShaderVar( "fishDiv", 1.3 ) );
 	
 	shader.addVar( ShaderVar( "colourDetail", 1 ) );
 	
@@ -94,15 +101,18 @@ void Layer::updateMesh () {
 	float meshDetail = listener.getDouble("/mesh/density", 0.1 );
 	meshDetail = meshDetail > 1.0 ? 1.0 : meshDetail < 0.0 ? 0.0 : meshDetail;
 	
-	if ( meshDetail == _meshDetail )
+	int mode = (int) listener.getDouble("mesh/mode/value", 0 );
+	
+	if ( meshDetail == _meshDetail && _meshMode == mode )
 		return;
 	
 	
-	int mode = (int) listener.getDouble("mesh/mode/value", 0 );
+
 	
 	int rows = roundf( powf( meshDetail, 2.0 ) * 240 ) + 6;
 	int cols = roundf( powf( meshDetail, 2.0 ) * 180 ) + 6;
 	
+	_meshMode = mode;
 	_meshDetail = meshDetail;
 	
 	meshGrid( mode, rows, cols, 1 );

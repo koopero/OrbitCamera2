@@ -12,6 +12,22 @@ module.exports = function ( C, W ) {
 			start();
 	} );
 
+	H.listen( H.Path( controlPath, "auto" ), function ( v ) {
+		if ( v ) {
+			listener.set( 1, 'shutter' );
+			start();
+
+
+			var timer = listener.get( 'timer/value' ) || 1000;
+			setTimeout( end, timer );
+
+
+		} else {
+			end();
+		}
+	} );
+
+
 
 
 	var startTime,
@@ -19,8 +35,9 @@ module.exports = function ( C, W ) {
 		recordFile = W.file( recordPath ),
 		recordPathLocal = recordFile.localPath,
 		maxTime = 60 * 1000,
-		quant = 300,
+		quant = 200,
 		posterTime = 100,
+		framesCopied,
 		outputDir,
 		frame;
 
@@ -28,7 +45,7 @@ module.exports = function ( C, W ) {
 	recordFile.mkdir();
 
 
-
+	H.set( 200, '/camera/0/quant');
 	H.set( recordPathLocal, '/camera/0/path');
 
 
@@ -39,18 +56,22 @@ module.exports = function ( C, W ) {
 
 		outputDir = W.file ( "/picture/"+timeCode()+"/" );
 
-		quant = listener.get('quant/value');
+		quant = listener.get('quant/value') || 0;
+		if ( quant < 200 )
+			quant = 200;
 
 		H.set( {
 			enable: 1,
 			path: recordPathLocal,
-			quant: 100,
+			quant: 200,
 		}, '/camera/0' );
 
 
 		startTime = quantTime( now, quant );
+		framesCopied = 0;
 
 		iterate();
+		listener.set( 0, 'error');
 	}
 
 
@@ -70,10 +91,14 @@ module.exports = function ( C, W ) {
 		//console.log ( "STORE", frame, output );
 
 		output.store( frame, { link: true }, function ( err ) {
-			//console.log( "Stored", err );
+			if ( err ) {
+				console.warn ( "FRAME COPY ERROR")
+			} else {
+				framesCopied++;
+			}
 		} );
 
-		//console.log( "frame", t, output );
+		console.log( "frame", t, quant );
 
 		if ( state.shutter && t < maxTime ) {
 			setTimeout( iterate, quant );
@@ -86,6 +111,15 @@ module.exports = function ( C, W ) {
 	function end () {
 		var now = new Date().getTime();
 		var t = now - startTime;
+
+		listener.set( 0, 'shutter' );
+		listener.set( 0, 'auto' );
+
+		if ( !outputDir || !startTime || t < 400 || !framesCopied ) {
+			listener.set( 1, 'error');
+			return;
+		}
+
 
 		var sequenceFile = outputDir.file( 'sequence.json' )
 
@@ -100,7 +134,7 @@ module.exports = function ( C, W ) {
 		sequenceFile.storeData ( sequence );
 
 		listener.set( sequence, '/lastPicture/' );
-		listener.set( 0, 'shutter' );
+
 
 		var posterFrame = recordedFileAtTime( startTime + posterTime, quant );
 

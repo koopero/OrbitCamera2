@@ -37,6 +37,7 @@ protected:
 	void meshGrid ( int mode, int width, int height, int depth = 1 );
 	
 	float _meshDetail	= 0;
+	int _meshMode = -1;
 	
 	Area bounds = Area( 0, 0, 480, 480) ;
 	Area inputBounds;

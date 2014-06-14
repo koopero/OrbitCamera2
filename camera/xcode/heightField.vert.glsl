@@ -5,8 +5,15 @@ uniform float depth0;
 uniform float zMid;
 uniform float depth1;
 
-uniform float z0;
-uniform float z1;
+uniform float perspZMult;
+uniform float perspZPow;
+uniform float perspZAdd;
+
+uniform float frustZMult;
+uniform float frustZAdd;
+
+uniform float fishDiv;
+uniform float fishAdd;
 
 
 uniform float colourDetail;
@@ -42,16 +49,16 @@ void main()
 	
 	vec4 pos = gl_Vertex;
 
-	float zz = pow( (source.a), 1.1 );
+	float zz = pow( (source.a), perspZPow );
 	
-	pos.z = zz * 6.0 - 6.0 * 0.8;
-	pos.xy = pos.xy / ( zz + 0.6 ) ;
+	pos.z = zz * perspZMult - perspZMult * perspZAdd;
+	pos.xy = pos.xy / ( zz * frustZMult + frustZAdd ) ;
 	//gl_Position.xyz = pos;
 	
 	vec4 screenPos = gl_ModelViewProjectionMatrix * pos;
 	
 	float r = length( screenPos.xy );
-	r = pow( r, 1.18 - zz * 0.18 ) / 1.3;
+	r = pow( r, (1.0 + fishAdd ) - zz * fishAdd ) / fishDiv;
 	
 	screenPos.xy = normalize( screenPos.xy ) * r;
 	

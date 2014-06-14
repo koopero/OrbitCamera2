@@ -52,6 +52,9 @@ void Screen::setup( int numLayers ) {
 	outputBuffer.setup( bounds.getWidth(), bounds.getHeight() );
 	
 	setupMesh();
+	
+	noise.setSeed( Rand::randInt() );
+	timer.start();
 }
 
 void Screen::takeInput(OrbitCamera *camera, FrameCache *frames) {
@@ -88,6 +91,10 @@ void Screen::update() {
 	}
 	
 	
+
+	
+
+	
 	char cornerPath[1000];
 	
     for ( int i = 0; i < 4; i ++ ) {
@@ -97,17 +104,32 @@ void Screen::update() {
         corner[i].y = listener.getDouble(cornerPath, i == 2 || i == 3 ? 1 : 0 );
     }
 	
+	double phase = timer.getSeconds() / 24.0;
+	
+	
 	
 	Vec3f lookAt = global.getVec3f( "/lookAt/", Vec3f( 0,0,0 ) );
 	Vec3f centre = listener.getVec3f( "/centre/", Vec3f( 0.5,0.5,0 ) );
 
+	Vec2f rand = Vec2f(
+		noise.fBm( phase, 1 ),
+		noise.fBm( phase, 1000 )
+	);
+	
+	rand -= Vec2f( 0.5, 0.5 );
+	rand *= 1.2;
+	
+	centre.x += rand.x;
+	centre.y += rand.y;
+	
+	
 	lookAt -= Vec3f( 0.5, 0.5, 0 );
-	lookAt *= 2.5;
+	lookAt *= 4.5;
 	lookAt.z = -1;
 	
 	Vec3f offset = centre - lookAt;
 	
-	cout << "Offset " << offset << endl;
+	//cout << "Offset " << offset << endl;
 	 
 	Vec3f rot = Vec3f(
 					  ci::toPolar( offset.yz() ).y / pi * 180 - 90,
@@ -115,7 +137,7 @@ void Screen::update() {
 					  0
 	);
 	
-	cout << "Rot " << rot << endl;
+	//cout << "Rot " << rot << endl;
 	
 	rotation = rot.xy();
 	
@@ -268,17 +290,23 @@ void Screen::draw() {
 	glBlendEquation(GL_FUNC_ADD);
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
+	
+	bool isCircle = listener.getBool( "isCircle" );
+	
 	gl::color( 1,1,1,1);
 	//gl::draw( buffer );
 	
 	buffer.enableAndBind();
-	gl::drawSolidRect( bounds );
-	//gl::drawSolidCircle( bounds.getCenter(), bounds.getWidth() / 2 );
 	
+	if ( isCircle ) {
+		gl::draw( mesh );
+	} else {
+		gl::drawSolidRect( bounds );
+	}
+		
 	buffer.unbind();
 	
 	//input.enableAndBind();
-	//gl::draw( mesh );
 	//input.unbind();
 	
 	
@@ -298,27 +326,42 @@ void Screen::setupMesh() {
     layout.setStaticPositions();
     layout.setStaticTexCoords2d();
     
-    mesh = gl::VboMesh(4, 4, layout, GL_QUADS );
+	int sides = 50;
+	
+    mesh = gl::VboMesh( sides + 2, sides + 2, layout, GL_TRIANGLE_FAN );
     
     vector<uint32_t> indices;
     vector<Vec2f> texCoords;
 	vector<Vec3f> positions;
+	
+	Vec3f centre = Vec3f( 240, 240, 0 );
+	float radius = 240;
+	
+	Vec2f texCentre = Vec2f( 0.5, 0.5 );
+	float texRadius = 0.5;
+	
+	
     
     indices.push_back( 0 );
-    indices.push_back( 1 );
-    indices.push_back( 3 );
-    indices.push_back( 2 );
-    
-    texCoords.push_back( Vec2f( 0, 0 ) );
-    texCoords.push_back( Vec2f( 1, 0 ) );
-    texCoords.push_back( Vec2f( 0, 1 ) );
-    texCoords.push_back( Vec2f( 1, 1 ) );
+    positions.push_back( centre );
+    texCoords.push_back( texCentre );
+
 	
-	positions.push_back( (Vec3f) Vec2f( 0,0 ) );
-	positions.push_back( Vec3f( 1024,0,0 ) );
-	positions.push_back( Vec3f( 0,1024,0 ) );
-	positions.push_back( Vec3f( 1024,1024,0 ) );
-	
+	for ( int i = 0; i <= sides; i ++ ) {
+		float rad = i;
+		rad /= (float) sides;
+		rad = rad * pi * 2;
+		
+		Vec3f cart = Vec3f(
+			sin ( rad ),
+			cos ( rad ),
+			0
+		);
+		
+		indices.push_back( positions.size() );
+		texCoords.push_back( cart.xy() * texRadius + texCentre );
+		positions.push_back( cart * radius + centre );
+	}
     
     mesh.bufferIndices( indices );
     mesh.bufferTexCoords2d(0, texCoords );

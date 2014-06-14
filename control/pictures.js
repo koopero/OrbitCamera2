@@ -24,7 +24,7 @@ module.exports = function ( conf, W ) {
 				var result = {};
 
 				async.mapSeries( dir, function ( picture, cb ) {
-					console.log ( "PCITURE", picture );
+					//console.log ( "PCITURE", picture );
 
 					var key = [ picture.substr( 6, 2 ), picture.substr( 8, 2 ), picture.substr( 10, 2 ) ].join(':');
 					picture = pictures.file( picture );

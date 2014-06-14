@@ -28,7 +28,7 @@ void TimeRanger::update() {
 	inTime = (int64_t) listener.getDouble( "/start", 0 );
 	offset = (int64_t) listener.getDouble( "/offset", 0 );
 	
-	//pingpong = listener.getBool( "/pingpong" );
+	pingpong = listener.getBool( "/pingpong" );
 	
 	Json::Value fileVal = listener.get( "/path" );
 	
@@ -41,7 +41,8 @@ void TimeRanger::update() {
 }
 
 int64_t TimeRanger::getTimeMS() {
-	int64_t time = wallTimeMS();
+	int64_t wallTime = wallTimeMS();
+	int64_t time = wallTime;
 	
 	time -= offset;
 	
@@ -65,6 +66,10 @@ int64_t TimeRanger::getTimeMS() {
 	}
 	
 	time += inTime;
+	
+	if ( time > wallTime ) {
+		time = wallTime * 2 - time;
+	}
 	
 	if ( quant ) {
 		time = time / quant;

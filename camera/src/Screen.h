@@ -13,11 +13,17 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <sys/time.h>
+#include <stdint.h>
+#include <inttypes.h>
+
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Vbo.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Texture.h"
-
+#include "cinder/Perlin.h"
+#include "cinder/Rand.h"
+#include "cinder/Timer.h"
 #include "CinderOpenCV.h"
 
 #include "Layer.h"
@@ -55,6 +61,9 @@ protected:
 	Listener listener;
 	Listener global;
 	TimeRanger inputFile;
+	
+	Perlin::Perlin noise;
+	Timer::Timer timer;
 	
 	VboMesh mesh;
 	

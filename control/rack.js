@@ -13,6 +13,7 @@ module.exports = function ( config, wildcat ) {
 
 	var numScreens = 10;
 
+
 	var Pictures = require('./pictures.js')( config, wildcat );
 
 	for ( var i = 0; i < numScreens; i ++ ) {
@@ -51,6 +52,7 @@ module.exports = function ( config, wildcat ) {
 		}
 	});
 
+/*
 	new Rack.Latch( {
 		path: '/control/unloop',
 		target: '/screen'
@@ -59,6 +61,7 @@ module.exports = function ( config, wildcat ) {
 			loop: 0
 		}
 	})
+*/
 
 	new Rack.Latch( {
 		path: '/control/recent',
@@ -67,10 +70,10 @@ module.exports = function ( config, wildcat ) {
 		return {
 			input: {
 				offset: quantTime(),
-				start: quantTime() - 1000,
+				start: quantTime() - 1200,
 				loop: 0,
 				camera: 0,
-				quant: 100
+				quant: 200
 			}
 		};
 	})
@@ -80,8 +83,10 @@ module.exports = function ( config, wildcat ) {
 
 
 	var screenPath = 'control/screen';
+	var numLayers = 3;
+	
 
-	for ( var i = 0; i < 3; i ++ ) {
+	for ( var i = 0; i < numLayers; i ++ ) {
 		var layerPath = Path( screenPath, 'layer', i );
 		Rack.Colour( Path( layerPath, 'back/colour' ) );
 		Rack.Colour( Path( layerPath, 'front/colour' ) );
@@ -95,6 +100,14 @@ module.exports = function ( config, wildcat ) {
 			}
 		} );
 	}
+
+	H.listenPrimitive( '/control/screen/layer/all', function ( v, p ) {
+		for ( var i = 0; i < numLayers; i ++ ) {
+			var layerPath = Path( screenPath, 'layer', i );
+			layerPath.set( v, p );
+		}
+	})
+
 
 	new Rack.Selector( {
 		path: Path( screenPath, 'mode' ),
@@ -120,6 +133,49 @@ module.exports = function ( config, wildcat ) {
 	} )
 
 
+	var writeScreenPreset = Rack.Latch( {
+		path: Path( 'control/writeScreenPreset' ),
+		target: Path( 'preset/screen' )
+	}).up('/control/screen');
+
+	var readScreenPreset = Rack.Latch( {
+		path: Path( 'control/readScreenPreset' ),
+		target: Path( 'preset/screen' )
+	}).up( function ( context ) {
+
+		H.set( context.target.get(), '/control/screen' )
+	});
+
+
+	Rack.Latch( {
+		path: Path( 'control/cycleScreenPreset' ),
+		target: Path( '/screen/' )
+	}).up( function ( context ) {
+		context.presetId = parseInt( context.presetId ) || 0;
+		context.presetId ++;
+		context.presetId %= 4; 
+		context.presetId = String( context.presetId );
+
+		
+
+		var preset = Path( '/preset/screen/' + context.presetId ).get();
+		//console.warn ( "Screen Preset Id", context.presetId, preset );
+
+
+
+		if ( preset.input ) {
+			var inputFeedback = preset.input.feedback;
+			delete preset.input;
+			preset.input = {
+				feedback: inputFeedback
+			}
+		}
+
+		context.target.set( preset );
+	});
+
+
+
 
 	var lightControlPath = 'control/lights';
 	for ( var i = 0; i < 3; i ++ ) {
@@ -134,7 +190,6 @@ module.exports = function ( config, wildcat ) {
 			}
 		})
 	}
-
 
 
 	var writeLightPreset = Rack.Latch( {
@@ -173,11 +228,10 @@ module.exports = function ( config, wildcat ) {
 	new Rack.Selector( {
 		path: Path( cameraControlPath, 'quant' ),
 		options: {
-			'0.1': 100,
 			'0.2': 200,
-			'0.5': 500,
-			'1.0': 1000,
-			'2.0': 2000
+			'0.4': 400,
+			'0.8': 800,
+			'1.0': 1000
 		}
 	} )
 
@@ -185,7 +239,7 @@ module.exports = function ( config, wildcat ) {
 	new Rack.Selector( {
 		path: Path( cameraControlPath, 'timer' ),
 		options: {
-			'0.5': 500,
+			'0.6': 600,
 			'1.0': 1000,
 			'2.0': 2000,
 			'5.0': 5000,
@@ -298,6 +352,16 @@ module.exports = function ( config, wildcat ) {
 			var path = H.Path( cellPath, mapLatch.selected, 'centre' );
 			path.set( coord );
 		}
+	});
+
+
+	H.listen( H.Path( controlsPath, 'isCircle' ), function ( value ) {
+		if ( mapLatch.selected == -1 )
+			return;
+
+		var path = H.Path( cellPath, mapLatch.selected, 'isCircle' );
+		path.set( value );
+		
 	});
 
 

@@ -52,7 +52,7 @@ class cameraApp : public AppBasic {
 	gl::Fbo			mBuffer;
 	gl::GlslProg	mShader;
 	
-	int numScreens = 10;
+	int numScreens = 9	;
 	int numLayers = 3;
 
 	vector<Screen>	screens;
@@ -117,8 +117,8 @@ void cameraApp::mouseDown( MouseEvent event )
 }
 
 void cameraApp::keyDown( KeyEvent event) {
-	if ( event.getChar() == 'p' ) {
-		camera.save();
+	if ( event.getChar() == 'f' ) {
+		setFullScreen( !isFullScreen() );
 	}
 }
 
